@@ -6,11 +6,13 @@ public class EnemyAI : MonoBehaviour
     public float moveSpeed = 2f;   // Speed at which the enemy moves
     public float detectionRange = 5f; // Distance to start moving
     private Rigidbody2D rb;
+    EnemyHealth health;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player").gameObject.transform;
+        health = GetComponent<EnemyHealth>();
 
         // Log a warning if player is null
         if (player == null)
@@ -21,7 +23,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        if (player != null && health.enemyDied!= true)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 

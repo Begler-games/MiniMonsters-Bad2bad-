@@ -10,6 +10,8 @@ public class playerController : MonoBehaviour
     [SerializeField] private Transform enemy;  // Change this to track multiple enemies
     public float detectionRadius = 5f;
     private Transform closestEnemy;
+    [SerializeField] GameObject[] body;
+    [SerializeField] Animator playerAnimator;
 
     void Start()
     {
@@ -21,6 +23,8 @@ public class playerController : MonoBehaviour
         movement = new Vector2(joystick.Horizontal, joystick.Vertical);
 
         closestEnemy = FindClosestEnemy();
+
+      
 
         if (closestEnemy != null && Vector3.Distance(transform.position, closestEnemy.position) <= detectionRadius)
         {
@@ -36,6 +40,26 @@ public class playerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        float normalizedJoystick = (Mathf.Abs(joystick.Horizontal) + Mathf.Abs(joystick.Vertical));
+        playerAnimator.SetFloat("walk", normalizedJoystick);
+        if (joystick.Horizontal < 0)
+        {
+            for (int i = 0; i < body.Length; i++)
+            {
+                body[i].transform.localScale = new Vector2(-1, 1);
+
+            }
+        }
+        else if (joystick.Horizontal > 0)
+        {
+            for (int i = 0; i < body.Length; i++)
+            {
+                body[i].transform.localScale = new Vector2(1, 1);
+
+            }
+
+
+        }
     }
 
     Transform FindClosestEnemy()

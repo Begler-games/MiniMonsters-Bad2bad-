@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     private float currentHealth;
     public Slider healthBar;
     public GameObject dropItemPrefab;  // Assign Drop Item Prefab here
+    Animator enemyAnimator;
+    public bool enemyDied = false;
 
     void Start()
     {
@@ -22,8 +26,14 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            enemyDied = true;
+            StartCoroutine(dieAnimation());
         }
+    }
+    IEnumerator dieAnimation()
+    {
+        yield return new WaitForSeconds(2);
+        Die();
     }
 
     void Die()

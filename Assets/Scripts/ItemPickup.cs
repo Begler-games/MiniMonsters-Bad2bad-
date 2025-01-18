@@ -45,6 +45,7 @@ public class ItemPickup : MonoBehaviour
                 inventory.AddItem(itemName, quantity, icon);
                 Destroy(gameObject);  // Destroy the item after being picked up
             }
+            Debug.Log(inventory.items);
         }
         else if (other.CompareTag("MagnetField"))
         {
