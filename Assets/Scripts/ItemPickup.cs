@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -43,13 +44,18 @@ public class ItemPickup : MonoBehaviour
             if (inventory != null)
             {
                 inventory.AddItem(itemName, quantity, icon);
-                Destroy(gameObject);  // Destroy the item after being picked up
+                StartCoroutine(destroyGameobject());  // Destroy the item with delay after being picked up
             }
-            Debug.Log(inventory.items);
         }
         else if (other.CompareTag("MagnetField"))
         {
             ActivateMagnet();
         }
+    }
+
+    IEnumerator destroyGameobject()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

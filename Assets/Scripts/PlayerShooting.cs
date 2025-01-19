@@ -32,7 +32,7 @@ public class PlayerShooting : MonoBehaviour
     IEnumerator ReloadWait()
     {
         Debug.Log("Reloading...");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         ammo += 10;
         ammoText.text = "ammo: " + ammo;
     }

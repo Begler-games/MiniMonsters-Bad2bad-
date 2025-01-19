@@ -30,12 +30,14 @@ public class Inventory : MonoBehaviour
         if (existingItem != null)
         {
             existingItem.quantity += qty;
+            Debug.Log($"Updated {name} quantity to {existingItem.quantity}");
             UpdateSlot(existingItem);
         }
         else
         {
             Item newItem = new Item() { itemName = name, quantity = qty, icon = icon };
             items.Add(newItem);
+            Debug.Log($"Added new item {name} with quantity {qty}");
             CreateSlot(newItem);
             UpdateSlot(newItem);
         }
@@ -95,7 +97,7 @@ public class Inventory : MonoBehaviour
         foreach (Transform slot in slotParent)
         {
             InventorySlot slotScript = slot.GetComponent<InventorySlot>();
-            if (slotScript.item.itemName == item.itemName)
+            if (slotScript.item != null && slotScript.item.itemName == item.itemName)
             {
                 slotScript.AddItem(item);
                 break;
@@ -108,7 +110,7 @@ public class Inventory : MonoBehaviour
         foreach (Transform slot in slotParent)
         {
             InventorySlot slotScript = slot.GetComponent<InventorySlot>();
-            if (slotScript.item.itemName == name)
+            if (slotScript.item != null && slotScript.item.itemName == name)
             {
                 Destroy(slot.gameObject);
                 break;
@@ -141,5 +143,4 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-
 }
